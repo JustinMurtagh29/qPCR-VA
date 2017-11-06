@@ -1,0 +1,5 @@
+install.packages("rJava")
+install.packages("rmngb")
+install.packages("reshape2")
+source('https://bioconductor.org/biocLite.R')
+biocLite('ddCt')
