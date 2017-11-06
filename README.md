@@ -40,7 +40,8 @@ and then installing the package again --> You will have to press Enter a lot unt
 succesfully ...something... check sum MD5"
 Sometimes it can be necessary to repeat the step mentioned above to get rid of any issues					
 
-Check if all necessary packages are downloaded correctly, by typing:	
+Check if all necessary packages are downloaded correctly, by typing:
+
 	- library("rmngb")
 	- library("reshape2")	
 	- library("ddCt")	
