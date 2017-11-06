@@ -46,7 +46,9 @@ Check if all necessary packages are downloaded correctly, by typing:
 	- library("reshape2")	
 	- library("ddCt")	
 	- library("ggplot2")	
-If there is a Warning like could not find package "NameOfPackage" try installing it manually with "install.packages('NameOfPackage')"
+If there is a Warning like could not find package "NameOfPackage" try installing it manually with 
+
+	- "install.packages('NameOfPackage')"
 #############################################################################################
 
 - Execute Install.bat by double clicking and type in the according paths. The necessary libraries will be copied to your JRE home directory
