@@ -33,6 +33,7 @@ Content:
 			
 			
 ####################################      ERROR HELP      ###################################
+
 If you get an Error saying something like: "could not move temporary file from 'C:\\Path' to 'C:\\Path'"
 try typing: debug(utils:::unpackPkgZip)	
 and then installing the package again --> You will have to press Enter a lot until it should say: "package downloded
@@ -40,10 +41,10 @@ succesfully ...something... check sum MD5"
 Sometimes it can be necessary to repeat the step mentioned above to get rid of any issues					
 
 Check if all necessary packages are downloaded correctly, by typing:	
-	library("rmngb")
-	library("reshape2")	
-	library("ddCt")	
-	library("ggplot2")	
+	- library("rmngb")
+	- library("reshape2")	
+	- library("ddCt")	
+	- library("ggplot2")	
 If there is a Warning like could not find package "NameOfPackage" try installing it manually with "install.packages('NameOfPackage')"
 #############################################################################################
 
