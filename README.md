@@ -5,7 +5,7 @@ Content:
 2. Install
 3. Usage
 
-###############################################################################################################################
+####################################################################################################
 
 1. Requirements before Installation:
 
@@ -18,8 +18,7 @@ Content:
 - jre version 1.8 or higher(get newest version at:http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 
 
-################################################################################################################################
-
+######################################################################################################
 2. Install:
 
 - Install jri and rJava by opening R or R-Studio and typing "install.packages('rJava')"
@@ -32,29 +31,26 @@ Content:
 		    "biocLite('ddCt')"
 			
 			
-####################################      ERROR HELP      ######################################################################
-#																				                                                                                     	 #
-#	If you get an Error saying something like: "could not move temporary file from 'C:\\Path' to 'C:\\Path'"							       #
-#	try typing: debug(utils:::unpackPkgZip)																                                                       #
-#	and then installing the package again --> You will have to press Enter a lot until it should say: "package downloded         # 
-# succesfully ...something... check sum MD5"	                                                                                 #
-#	Sometimes it can be necessary to repeat the step mentioned above to get rid of any issues							               		     #
-#																					                                                                                     #
-#	Check if all necessary packages are downloaded correctly, by typing:												                                 #
-#	library("rmngb")																		                                                                         #
-#	library("reshape2")																		                                                                       #
-#	library("ddCt")																			                                                                         #
-#	library("ggplot2")																		                                                                       #
-#																					                                                                                     #
-#	If there is a Warning like could not find package "NameOfPackage" try installing it manually with                            #
-#"install.packages('NameOfPackage')"				                                                                                   #
-################################################################################################################################
+####################################      ERROR HELP      ############################################
+If you get an Error saying something like: "could not move temporary file from 'C:\\Path' to 'C:\\Path'"
+try typing: debug(utils:::unpackPkgZip)	
+and then installing the package again --> You will have to press Enter a lot until it should say: "package downloded
+succesfully ...something... check sum MD5"
+Sometimes it can be necessary to repeat the step mentioned above to get rid of any issues					
+
+Check if all necessary packages are downloaded correctly, by typing:	
+	library("rmngb")
+	library("reshape2")	
+	library("ddCt")	
+	library("ggplot2")	
+If there is a Warning like could not find package "NameOfPackage" try installing it manually with "install.packages('NameOfPackage')"
+#######################################################################################################
 
 - Execute Install.bat by double clicking and type in the according paths. The necessary libraries will be copied to your JRE home directory
 
 - Run PlotAndStats.jar
 
-################################################################################################################################
+#######################################################################################################
 
 3. Usage:
 
@@ -77,7 +73,7 @@ Content:
 
 - If you wish to save the Plot and Table press the save button and select the directory where the files should be saved
 
-################################################################################################################################
+#########################################################################################################
 
 Created by:
 
