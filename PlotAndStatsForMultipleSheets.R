@@ -485,7 +485,7 @@ plotter <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,svname,plott
       geom_errorbar(aes(ymin=Count-sd, ymax=Count+sd),
                     width=.2,                    # Width of the error bars
                     position=position_dodge(.9))+
-      facet_wrap( "Variable" )+
+      facet_wrap( "Variable",scales="free" )+
       ggtitle(svname) +
       xlab(versuchsgruppenname) + ylab(ylabel)
   }
@@ -497,7 +497,7 @@ plotter <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,svname,plott
       geom_errorbar(aes(ymin=Count-1-sd, ymax=Count-1+sd),
                     width=.2,                    # Width of the error bars
                     position=position_dodge(.9))+
-      facet_wrap( "Variable" )+
+      facet_wrap( "Variable",scales="free" )+
       ggtitle(svname) +
       scale_y_continuous(breaks=-3:3, labels=-3:3 + 1)+
       xlab(versuchsgruppenname) + ylab(ylabel)
@@ -523,9 +523,9 @@ plotter <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,svname,plott
     p=round(x=p, digits=4)
     pvalue = c(pvalue,p)
     if(p <0.05){
-      significant=c(significant,"ja")
+      significant=c(significant,"yes")
     }else{
-      significant=c(significant,"nein")
+      significant=c(significant,"no")
     }
   }
   
@@ -533,7 +533,7 @@ plotter <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,svname,plott
   statistics[,4] = round(x=statistics[,4],digits=4)
   
   statistics=cbind(statistics,pvalue,significant)
-  colnames(statistics) <- c("Versuchsgruppen", "Versuchsbedingung","µ Expr.","sd Expr.","p-Wert","Signifikanz")
+  colnames(statistics) <- c("Condition", "Experiment Group","µ Expr.","sd Expr.","p-value","Significance")
   
   #Write the results of the statistical test to a csv file
   write.csv2(statistics, file =paste(pth,svname,"_pvalue.csv",sep=""),row.names=FALSE,sep=";", dec="," )
@@ -550,7 +550,7 @@ plotadjust <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,plottp,re
       geom_errorbar(aes(ymin=Count-sd, ymax=Count+sd),
                     width=.2,                    # Width of the error bars
                     position=position_dodge(.9))+
-      facet_wrap( "Variable" )+
+      facet_wrap( "Variable",scales="free" )+
       ggtitle(titel) +
       ylim(ylimit)+
       theme(text = element_text(size=fontSize),
@@ -565,7 +565,7 @@ plotadjust <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,plottp,re
       geom_errorbar(aes(ymin=Count-1-sd, ymax=Count-1+sd),
                     width=.2,                    # Width of the error bars
                     position=position_dodge(.9))+
-      facet_wrap( "Variable" )+
+      facet_wrap( "Variable",scales="free" )+
       ggtitle(titel) +
       theme(text = element_text(size=fontSize),
             axis.text.x = element_text(angle=ori,hjust=1))+
