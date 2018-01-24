@@ -26,6 +26,9 @@
 #ylimit = c(-1,4)
 #fontSize = 20
 #ori = 90
+if(substr(pth,0,1)== "\\\\"){
+  pth=sub("\\\\","",pth)
+}
 
 #read sheet into list
 readLightCycler480 <- function(file,durations,versuchsgruppen){
