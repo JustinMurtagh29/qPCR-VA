@@ -22,6 +22,19 @@ Content:
 
 2. Install:
 
+!!!!!!!
+
+Please Make sure that all Packages are downloaded into the R main library (C:\Program Files\R\R-version\library) and not into a external library like C:\Users\Documents\R\...\library or the Programm will fail.
+To ensure that the right library is used, execute R as administrator. If for some reason this does not work either please copy all file from your external library to the main library.
+
+!!!!!!!
+
+Using Inst.R:
+
+- type source("C:\\Path\\to\\Inst.R")
+
+Manual Install:
+
 - Install jri and rJava by opening R or R-Studio and typing "install.packages('rJava')"
 
 - Install rmngb with "install.packages('rmngb')"
@@ -77,6 +90,8 @@ If there is a Warning like could not find package "NameOfPackage" try installing
 - When the whole mask is filled out press 'Apply'. The program wll now create a bar plot and show the coressponding data in a Table underneath.
 
 - If you wish to save the Plot and Table press the save button and select the directory where the files should be saved
+
+- You will need to select another directory then the one where your excel-sheet is located or the files will be recognized as temporary files and will be deleted! 
 
 #########################################################################################################
 
