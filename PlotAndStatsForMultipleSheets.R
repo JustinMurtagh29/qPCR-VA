@@ -26,6 +26,7 @@
 #ylimit = c(-1,4)
 #fontSize = 20
 #ori = 90
+write("hui",file="C:\\Users\\die9s\\Desktop\\hui.txt")
 if(substr(pth,0,1)== "\\\\"){
   pth=sub("\\\\","",pth)
 }
@@ -587,3 +588,31 @@ plotadjust <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,plottp,re
 #indata = combine2Sheets(data1,data2,durations,durations1,durations2,versuchsgruppen,versuchsgruppen1,versuchsgruppen2)
 #plotter(pth,versuchsgruppenname,versuchsgruppen,ylabel,svname,plottp,resolution,indata)
 #plotadjust(pth,versuchsgruppenname,versuchsgruppen,ylabel,plottp,resolution,indata,titel,ylimit,fontSize,ori)
+
+
+
+if(numberOfSheets == 1) {
+ list1 = readLightCycler480(sheet1,durations1)
+ data1 = prepdata(list1)
+ indata = makeIndata(data1,durations,versuchsgruppen)
+ plotter(pth,versuchsgruppenname,versuchsgruppen,ylabel,svname,plottp,resolution,indata);
+} else {
+  if(numberOfSheets == 2) {
+    list1 = readLightCycler480(sheet1,durations1)
+    data1 = prepdata(list1)
+    list2 = readLightCycler480(sheet2,durations2)
+    data2 = prepdata(list2)
+    indata = combine2Sheets(data1,data2,durations,durations1,durations2,versuchsgruppen,versuchsgruppen1,versuchsgruppen2)
+    plotter(pth,versuchsgruppenname,versuchsgruppen,ylabel,svname,plottp,resolution,indata)
+  } else {
+    list1 = readLightCycler480(sheet1,durations1)
+    data1 = prepdata(list1)
+    list2 = readLightCycler480(sheet2,durations2)
+    data2 = prepdata(list2)
+    indata = combine2Sheets(data1,data2,durations,durations1,durations2,versuchsgruppen,versuchsgruppen1,versuchsgruppen2)
+    for(i in 2:numberOfSheets) {
+     indata = combineSheets(paste0(sheetlist,i),durations,paste0(durations,i),versuchsgruppen,paste0(versuchsgruppen,i),indata)
+    }
+   plotter(pth,versuchsgruppenname,versuchsgruppen,ylabel,svname,plottp,resolution,indata)
+  }
+}
