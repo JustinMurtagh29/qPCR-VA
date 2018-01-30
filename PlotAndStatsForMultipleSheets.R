@@ -26,10 +26,6 @@
 #ylimit = c(-1,4)
 #fontSize = 20
 #ori = 90
-write("hui",file="C:\\Users\\die9s\\Desktop\\hui.txt")
-if(substr(pth,0,1)== "\\\\"){
-  pth=sub("\\\\","",pth)
-}
 
 #read sheet into list
 readLightCycler480 <- function(file,durations,versuchsgruppen){
@@ -489,7 +485,7 @@ plotter <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,svname,plott
       geom_errorbar(aes(ymin=Count-sd, ymax=Count+sd),
                     width=.2,                    # Width of the error bars
                     position=position_dodge(.9))+
-      facet_wrap( "Variable",scales="free" )+
+      facet_wrap( "Variable",scales="free"  )+
       ggtitle(svname) +
       xlab(versuchsgruppenname) + ylab(ylabel)
   }
@@ -501,7 +497,7 @@ plotter <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,svname,plott
       geom_errorbar(aes(ymin=Count-1-sd, ymax=Count-1+sd),
                     width=.2,                    # Width of the error bars
                     position=position_dodge(.9))+
-      facet_wrap( "Variable",scales="free" )+
+      facet_wrap( "Variable",scales="free"  )+
       ggtitle(svname) +
       scale_y_continuous(breaks=-3:3, labels=-3:3 + 1)+
       xlab(versuchsgruppenname) + ylab(ylabel)
@@ -527,9 +523,9 @@ plotter <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,svname,plott
     p=round(x=p, digits=4)
     pvalue = c(pvalue,p)
     if(p <0.05){
-      significant=c(significant,"yes")
+      significant=c(significant,"ja")
     }else{
-      significant=c(significant,"no")
+      significant=c(significant,"nein")
     }
   }
   
@@ -537,7 +533,7 @@ plotter <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,svname,plott
   statistics[,4] = round(x=statistics[,4],digits=4)
   
   statistics=cbind(statistics,pvalue,significant)
-  colnames(statistics) <- c("Condition", "Experiment Group","µ Expr.","sd Expr.","p-value","Significance")
+  colnames(statistics) <- c("Versuchsgruppen", "Versuchsbedingung","µ Expr.","sd Expr.","p-Wert","Signifikanz")
   
   #Write the results of the statistical test to a csv file
   write.csv2(statistics, file =paste(pth,svname,"_pvalue.csv",sep=""),row.names=FALSE,sep=";", dec="," )
@@ -554,7 +550,7 @@ plotadjust <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,plottp,re
       geom_errorbar(aes(ymin=Count-sd, ymax=Count+sd),
                     width=.2,                    # Width of the error bars
                     position=position_dodge(.9))+
-      facet_wrap( "Variable",scales="free" )+
+      facet_wrap( "Variable",scales="free"  )+
       ggtitle(titel) +
       ylim(ylimit)+
       theme(text = element_text(size=fontSize),
@@ -569,7 +565,7 @@ plotadjust <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,plottp,re
       geom_errorbar(aes(ymin=Count-1-sd, ymax=Count-1+sd),
                     width=.2,                    # Width of the error bars
                     position=position_dodge(.9))+
-      facet_wrap( "Variable",scales="free" )+
+      facet_wrap( "Variable",scales="free"  )+
       ggtitle(titel) +
       theme(text = element_text(size=fontSize),
             axis.text.x = element_text(angle=ori,hjust=1))+
@@ -588,31 +584,3 @@ plotadjust <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,plottp,re
 #indata = combine2Sheets(data1,data2,durations,durations1,durations2,versuchsgruppen,versuchsgruppen1,versuchsgruppen2)
 #plotter(pth,versuchsgruppenname,versuchsgruppen,ylabel,svname,plottp,resolution,indata)
 #plotadjust(pth,versuchsgruppenname,versuchsgruppen,ylabel,plottp,resolution,indata,titel,ylimit,fontSize,ori)
-
-
-
-if(numberOfSheets == 1) {
- list1 = readLightCycler480(sheet1,durations1)
- data1 = prepdata(list1)
- indata = makeIndata(data1,durations,versuchsgruppen)
- plotter(pth,versuchsgruppenname,versuchsgruppen,ylabel,svname,plottp,resolution,indata);
-} else {
-  if(numberOfSheets == 2) {
-    list1 = readLightCycler480(sheet1,durations1)
-    data1 = prepdata(list1)
-    list2 = readLightCycler480(sheet2,durations2)
-    data2 = prepdata(list2)
-    indata = combine2Sheets(data1,data2,durations,durations1,durations2,versuchsgruppen,versuchsgruppen1,versuchsgruppen2)
-    plotter(pth,versuchsgruppenname,versuchsgruppen,ylabel,svname,plottp,resolution,indata)
-  } else {
-    list1 = readLightCycler480(sheet1,durations1)
-    data1 = prepdata(list1)
-    list2 = readLightCycler480(sheet2,durations2)
-    data2 = prepdata(list2)
-    indata = combine2Sheets(data1,data2,durations,durations1,durations2,versuchsgruppen,versuchsgruppen1,versuchsgruppen2)
-    for(i in 2:numberOfSheets) {
-     indata = combineSheets(paste0(sheetlist,i),durations,paste0(durations,i),versuchsgruppen,paste0(versuchsgruppen,i),indata)
-    }
-   plotter(pth,versuchsgruppenname,versuchsgruppen,ylabel,svname,plottp,resolution,indata)
-  }
-}
