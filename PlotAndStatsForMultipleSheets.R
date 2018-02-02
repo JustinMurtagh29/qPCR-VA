@@ -1,4 +1,4 @@
-#library("ddCt")
+library("ddCt")
 #library("reshape2")
 #library("rmngb")
 #library("ggplot2")
@@ -30,7 +30,7 @@
 #read sheet into list
 readLightCycler480 <- function(file,durations,versuchsgruppen){
   #durNum = makeCounter()
-  raw.data <- read.table(file, skip=4, fill=TRUE, sep="\t")
+  raw.data <- read.table(file, skip=4, fill=TRUE, sep="\t",header=FALSE)
   
   ## just keep columns 1 to 7
   keeps <- 1:7
@@ -45,7 +45,7 @@ readLightCycler480 <- function(file,durations,versuchsgruppen){
   wellCol=NULL
   sampleCol=NULL
   snglist=NULL
-  
+#  capture.output(raw.data$name,file="C:\\Users\\gal0d.WS-911-1136A\\Desktop\\test.txt")
   for(i in 1:nrow(raw.data)){
     nameCol = as.character(raw.data$name[i])
     
@@ -83,6 +83,7 @@ readLightCycler480 <- function(file,durations,versuchsgruppen){
     ilist[[length(ilist)+1]] <-assign(paste("IF_",durations[[dur]],sep=""),InputFrame(test[grep(durations[[dur]], test$Sample),]))
     #durNum(increment,1)
   }  
+
   effVal = NULL
   effErr = NULL
   genes = NULL
