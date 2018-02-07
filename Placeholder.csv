@@ -1,0 +1,4 @@
+Exp. Group;Exp. Conidtion;µ Expr.;sd Expr.;p-value;Significance
+group1;condition1;#;#;0,04;yes
+group2;condition2;#;#;0,04;yes
+group3;condition3;#;#;0,5;no

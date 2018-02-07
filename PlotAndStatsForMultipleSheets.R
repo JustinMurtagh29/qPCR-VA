@@ -31,7 +31,6 @@ library("ddCt")
 readLightCycler480 <- function(file,durations,versuchsgruppen){
   #durNum = makeCounter()
   raw.data <- read.table(file, skip=4, fill=TRUE, sep="\t",header=FALSE)
-  
   ## just keep columns 1 to 7
   keeps <- 1:7
   raw.data = raw.data[keeps] ## subsetting columns
@@ -474,6 +473,9 @@ combineSheets <-function(sheetlist1,durations,durations1,versuchsgruppen,versuch
 
 #plot the data and do the statistical Tests
 plotter <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,svname,plottp,resolution,plotdata.molten){
+  setwd(pth)
+  dir.create(".\\tmp")
+  
   resolution = as.numeric(resolution)
   
   # plot and facet by categories
@@ -505,7 +507,8 @@ plotter <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,svname,plott
   }
   
   #Save the plot to a png file
-  ggsave(filename=paste(pth,svname,".png",sep=""),dpi=resolution)
+ 
+  ggsave(filename=paste(pth,"tmp\\",svname,".png",sep=""),dpi=resolution)
   
   # statistical test (t-test)
   options(scipen = 999)
@@ -524,9 +527,9 @@ plotter <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,svname,plott
     p=round(x=p, digits=4)
     pvalue = c(pvalue,p)
     if(p <0.05){
-      significant=c(significant,"ja")
+      significant=c(significant,"yes")
     }else{
-      significant=c(significant,"nein")
+      significant=c(significant,"no")
     }
   }
   
@@ -534,10 +537,10 @@ plotter <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,svname,plott
   statistics[,4] = round(x=statistics[,4],digits=4)
   
   statistics=cbind(statistics,pvalue,significant)
-  colnames(statistics) <- c("Versuchsgruppen", "Versuchsbedingung","µ Expr.","sd Expr.","p-Wert","Signifikanz")
+  colnames(statistics) <- c("Exp. Group", "Exp. Conidtion","µ Expr.","sd Expr.","p-value","Significance")
   
   #Write the results of the statistical test to a csv file
-  write.csv2(statistics, file =paste(pth,svname,"_pvalue.csv",sep=""),row.names=FALSE,sep=";", dec="," )
+  write.csv2(statistics, file =paste(pth,"tmp\\",svname,"_pvalue.csv",sep=""),row.names=FALSE,sep=";", dec="," )
 }
 plotadjust <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,plottp,resolution,plotdata.molten,titel,ylimit,fontSize,ori){
   resolution = as.numeric(resolution)
@@ -576,7 +579,7 @@ plotadjust <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,plottp,re
   
   #Save the plot to a png file
   #svname =  titel
-  ggsave(filename=paste(pth,svname,".png",sep=""),dpi=resolution)
+  ggsave(filename=paste(pth,"tmp\\",svname,".png",sep=""),dpi=resolution)
 }
 #list1 = readLightCycler480(sheet1,durations1)
 #data1 = prepdata(list1)
