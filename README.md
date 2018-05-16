@@ -22,6 +22,10 @@ Content:
 
 2. Install:
 
+- Right click the file Install.bat and execute it as administrator
+
+Manual Install:
+
 !!!!!!!
 
 Please Make sure that all Packages are downloaded into the R main library (C:\Program Files\R\R-version\library) and not into a external library like C:\Users\Documents\R\...\library or the Programm will fail.
@@ -33,7 +37,6 @@ Using Inst.R:
 
 - type source("C:\\Path\\to\\Inst.R")
 
-Manual Install:
 
 - Install jri and rJava by opening R or R-Studio and typing "install.packages('rJava')"
 
@@ -64,9 +67,9 @@ If there is a Warning like could not find package "NameOfPackage" try installing
 	- "install.packages('NameOfPackage')"
 #############################################################################################
 
-- Execute Install.bat by double clicking and type in the according paths. The necessary libraries will be copied to your JRE home directory
+- copy all .dll files from R\bin\x64 and the jri.dll from R\library\rjava\jri\x64 to your java\bin directory 
 
-- Run PlotAndStats.jar
+- Run qPCR-VA.jar
 
 #############################################################################################
 
