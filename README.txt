@@ -23,6 +23,13 @@ Content:
 
 - Right click the file Install.bat and execute it as administrator
 
+- make sure all R-packages are installed correctly by starting R and typing 
+			library("rmngb")
+			library("reshape2")
+			library("ddCt")	
+			library("ggplot2")
+- This step is necessary due to known problems with the automated Installation of R-packages. If Errors occur see the manual installation guide below to install the missing packages.
+
 Manual Install:
 
 !!!!!!!
@@ -38,7 +45,7 @@ Using Inst.R:
 
 - Execute Install.bat by double clicking and type in the according paths. The necessary libraries will be copied to your JRE home directory
 
-- Run PlotAndStats.jar
+- Run qPCR-VA.jar
 
 
 
