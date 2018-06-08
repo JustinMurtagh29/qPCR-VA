@@ -537,7 +537,7 @@ plotter <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,svname,plott
   statistics[,4] = round(x=statistics[,4],digits=4)
   
   statistics=cbind(statistics,pvalue,significant)
-  colnames(statistics) <- c("Exp. Group", "Exp. Conidtion","µ Expr.","sd Expr.","p-value","Significance")
+  colnames(statistics) <- c("Exp. Group", "Exp. Conidtion","\u00B5 Expr.","sd Expr.","p-value","Significance")
   
   #Write the results of the statistical test to a csv file
   write.csv2(statistics, file =paste(pth,"tmp\\",svname,"_pvalue.csv",sep=""),row.names=FALSE,sep=";", dec="," )
