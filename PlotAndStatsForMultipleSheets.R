@@ -542,7 +542,7 @@ plotter <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,svname,plott
   #Write the results of the statistical test to a csv file
   write.csv2(statistics, file =paste(pth,"tmp\\",svname,"_pvalue.csv",sep=""),row.names=FALSE,sep=";", dec="," )
 }
-plotadjust <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,plottp,resolution,plotdata.molten,titel,ylimit,fontSize,ori){
+plotadjust <- function(path,xlabel,versuchsgruppen,ylabel,plottp,resolution,plotdata.molten,titel,ylimit,fontSize,ori){
   resolution = as.numeric(resolution)
   # plot and facet by categories
   
@@ -559,7 +559,7 @@ plotadjust <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,plottp,re
       ylim(ylimit)+
       theme(text = element_text(size=fontSize),
             axis.text.x = element_text(angle=ori,hjust=1))+
-      xlab(versuchsgruppenname) + ylab(ylabel)
+      xlab(xlabel) + ylab(ylabel)
   }
   
   #######Creates bar plot with diviation from mean (1)#########################
@@ -571,10 +571,11 @@ plotadjust <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,plottp,re
                     position=position_dodge(.9))+
       facet_wrap( "Variable",scales="free"  )+
       ggtitle(titel) +
+	  ylim(ylimit)+
       theme(text = element_text(size=fontSize),
             axis.text.x = element_text(angle=ori,hjust=1))+
       scale_y_continuous(breaks=ylimit[1]:ylimit[2], labels=ylimit[1]:ylimit[2] + 1)+
-      xlab(versuchsgruppenname) + ylab(ylabel)
+      xlab(xlabel) + ylab(ylabel)
   }
   
   #Save the plot to a png file
