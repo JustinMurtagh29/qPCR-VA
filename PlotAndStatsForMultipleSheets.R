@@ -492,60 +492,75 @@ plotter <- function(path,versuchsgruppenname,versuchsgruppen,ylabel,svname,plott
       ggtitle(svname) +
       xlab(versuchsgruppenname) + ylab(ylabel)
   }
-  
-  #######Creates bar plot with diviation from mean (1)#########################
   else{
-    ggplot( data=plotdata.molten, aes(x=Category,y=Count-1, fill=Category)) +
-      geom_bar(position= position_dodge(), stat="identity") +
-      geom_errorbar(aes(ymin=Count-1-sd, ymax=Count-1+sd),
-                    width=.2,                    # Width of the error bars
-                    position=position_dodge(.9))+
-      facet_wrap( "Variable",scales="free"  )+
-      ggtitle(svname) +
-      scale_y_continuous(breaks=-3:3, labels=-3:3 + 1)+
-      xlab(versuchsgruppenname) + ylab(ylabel)
+    #######Creates bar plot with diviation from mean (1)#########################
+    if(plottp=="Barplot deviation from mean"){
+      ggplot( data=plotdata.molten, aes(x=Category,y=Count-1, fill=Category)) +
+        geom_bar(position= position_dodge(), stat="identity") +
+        geom_errorbar(aes(ymin=Count-1-sd, ymax=Count-1+sd),
+                      width=.2,                    # Width of the error bars
+                      position=position_dodge(.9))+
+        facet_wrap( "Variable",scales="free"  )+
+        ggtitle(svname) +
+        scale_y_continuous(breaks=-3:3, labels=-3:3 + 1)+
+        xlab(versuchsgruppenname) + ylab(ylabel)
+    }
+    ######Creates Boxplot#########################################################
+    else{
+      ggplot( data=plotdata.molten, aes(x=Category,y=Count-1, fill=Category)) +
+        geom_boxplot() +
+        geom_dotplot(dotsize=1)+
+        ggtitle(titel) +
+        ylim(ylimit)+
+        theme(text = element_text(size=fontSize),
+              axis.text.x = element_text(angle=ori,hjust=1))+
+        xlab(xlabel) + ylab(ylabel)
+    }
   }
+  
+  
   
   #Save the plot to a png file
  
   ggsave(filename=paste(pth,"tmp\\",svname,".png",sep=""),dpi=resolution)
   
   # statistical test (t-test)
-  options(scipen = 999)
-  statistics = plotdata.molten[which(plotdata.molten$Count!=1),];
-  pvalue=NULL;
-  significant=NULL;
-  for(i in 1:nrow(statistics)){
-    
-    mean = statistics$Count[i]
-    sd = statistics$sd[i]
-    n=3
-    mu=1
-    
-    t <- (mean - mu) / (sd/sqrt(n))
-    p=2*pt(-abs(t),df=n-1)
-    p=round(x=p, digits=4)
-    pvalue = c(pvalue,p)
-    if(p <0.05){
-      significant=c(significant,"yes")
-    }else{
-      significant=c(significant,"no")
-    }
-  }
-  
-  statistics[,3] = round(x=statistics[,3],digits=4)
-  statistics[,4] = round(x=statistics[,4],digits=4)
-  
-  statistics=cbind(statistics,pvalue,significant)
-  colnames(statistics) <- c("Exp. Group", "Exp. Conidtion","\u00B5 Expr.","sd Expr.","p-value","Significance")
-  
-  #Write the results of the statistical test to a csv file
+  #options(scipen = 999)
+  statistics = plotdata.molten;
+  #pvalue=NULL;
+  #significant=NULL;
+  #for(i in 1:nrow(statistics)){
+    #
+    #mean = statistics$Count[i]
+    #sd = statistics$sd[i]
+    #n=3
+    #mu=1
+#    
+    #t <- (mean - mu) / (sd/sqrt(n))
+    #p=2*pt(-abs(t),df=n-1)
+    #p=round(x=p, digits=4)
+    #pvalue = c(pvalue,p)
+    #if(p <0.05){
+      #significant=c(significant,"yes")
+    #}else{
+      #significant=c(significant,"no")
+    #}
+  #}
+#  
+  #statistics[,3] = round(x=statistics[,3],digits=4)
+  #statistics[,4] = round(x=statistics[,4],digits=4)
+#  
+  #statistics=cbind(statistics,pvalue,significant)
+  colnames(statistics) <- c("Exp.Group", "Exp.Conidtion","\u00B5Expr.","sdExpr.")
+#  
+  ##Write the results of the statistical test to a csv file
   write.csv2(statistics, file =paste(pth,"tmp\\",svname,"_pvalue.csv",sep=""),row.names=FALSE,sep=";", dec="," )
 }
-plotadjust <- function(path,xlabel,versuchsgruppen,ylabel,plottp,resolution,plotdata.molten,titel,ylimit,fontSize,ori){
+plotadjust <- function(path,xlabel,versuchsgruppen,ylabel,plottp,resolution,plotdata.molten,titel,ylimit,fontSize,ori,colour){
   resolution = as.numeric(resolution)
   # plot and facet by categories
-  
+  write(colour,file="C:\\Users\\Justin\\Desktop\\test1.txt")
+  if(colour=="Colour"){
   #######Creates standard bar plot ############################################
   if(plottp == "Barplot"){
     ggplot( data=plotdata.molten, aes(x=Category,y=Count, fill=Category)) +
@@ -561,27 +576,116 @@ plotadjust <- function(path,xlabel,versuchsgruppen,ylabel,plottp,resolution,plot
             axis.text.x = element_text(angle=ori,hjust=1))+
       xlab(xlabel) + ylab(ylabel)
   }
-  
-  #######Creates bar plot with diviation from mean (1)#########################
   else{
-    ggplot( data=plotdata.molten, aes(x=Category,y=Count-1, fill=Category)) +
-      geom_bar(position= position_dodge(), stat="identity") +
-      geom_errorbar(aes(ymin=Count-1-sd, ymax=Count-1+sd),
-                    width=.2,                    # Width of the error bars
-                    position=position_dodge(.9))+
-      facet_wrap( "Variable",scales="free"  )+
-      ggtitle(titel) +
-	  ylim(ylimit)+
-      theme(text = element_text(size=fontSize),
-            axis.text.x = element_text(angle=ori,hjust=1))+
-      scale_y_continuous(breaks=ylimit[1]:ylimit[2], labels=ylimit[1]:ylimit[2] + 1)+
-      xlab(xlabel) + ylab(ylabel)
+    #######Creates bar plot with diviation from mean (1)#########################
+    if(plottp=="Barplot deviation from mean"){
+      ggplot( data=plotdata.molten, aes(x=Category,y=Count-1, fill=Category)) +
+        geom_bar(position= position_dodge(), stat="identity") +
+        geom_errorbar(aes(ymin=Count-1-sd, ymax=Count-1+sd),
+                      width=.2,                    # Width of the error bars
+                      position=position_dodge(.9))+
+        facet_wrap( "Variable",scales="free"  )+
+        ggtitle(titel) +
+        ylim(ylimit)+
+        theme(text = element_text(size=fontSize),
+              axis.text.x = element_text(angle=ori,hjust=1))+
+        scale_y_continuous(breaks=ylimit[1]:ylimit[2], labels=ylimit[1]:ylimit[2] + 1)+
+        xlab(xlabel) + ylab(ylabel)
+    }
+    #####Creates Boxplot###################################################################
+    else{
+      boxdata=plotdata.molten;
+      boxdata1=plotdata.molten;
+      boxdata2=plotdata.molten;
+      boxdata1$Count=plotdata.molten$Count+plotdata.molten$sd;
+      boxdata2$Count=plotdata.molten$Count-plotdata.molten$sd;
+      boxdata=rbind(boxdata,boxdata1);
+      boxdata=rbind(boxdata,boxdata2);
+      ggplot( data=boxdata, aes(x=Category,y=Count, fill=Category)) +
+        geom_boxplot() +
+        geom_dotplot(binaxis='y', stackdir='center',dotsize=0.25,binwidth=0.25)+
+        facet_wrap( "Variable",scales="free"  )+
+        ggtitle(titel) +
+        ylim(ylimit)+
+        theme(text = element_text(size=fontSize),
+              axis.text.x = element_text(angle=ori,hjust=1))+
+        xlab(xlabel) + ylab(ylabel)
+    }
   }
+  
+ 
   
   #Save the plot to a png file
   #svname =  titel
   ggsave(filename=paste(pth,"tmp\\",svname,".png",sep=""),dpi=resolution)
+  }
+  else{
+    #######Creates standard bar plot ############################################
+    if(plottp == "Barplot"){
+      ggplot( data=plotdata.molten, aes(x=Category,y=Count, fill=Category)) +
+        geom_hline(yintercept = 1)+
+        geom_bar(position= position_dodge(), stat="identity") +
+        geom_errorbar(aes(ymin=Count-sd, ymax=Count+sd),
+                      width=.2,                    # Width of the error bars
+                      position=position_dodge(.9))+
+        facet_wrap( "Variable",scales="free"  )+
+        ggtitle(titel) +
+        ylim(ylimit)+
+        theme(text = element_text(size=fontSize),
+              axis.text.x = element_text(angle=ori,hjust=1))+
+        xlab(xlabel) + ylab(ylabel)+
+        scale_fill_grey()
+    }
+    else{
+      #######Creates bar plot with diviation from mean (1)#########################
+      if(plottp=="Barplot deviation from mean"){
+        ggplot( data=plotdata.molten, aes(x=Category,y=Count-1, fill=Category)) +
+          geom_bar(position= position_dodge(), stat="identity") +
+          geom_errorbar(aes(ymin=Count-1-sd, ymax=Count-1+sd),
+                        width=.2,                    # Width of the error bars
+                        position=position_dodge(.9))+
+          facet_wrap( "Variable",scales="free"  )+
+          ggtitle(titel) +
+          ylim(ylimit)+
+          theme(text = element_text(size=fontSize),
+                axis.text.x = element_text(angle=ori,hjust=1))+
+          scale_y_continuous(breaks=ylimit[1]:ylimit[2], labels=ylimit[1]:ylimit[2] + 1)+
+          xlab(xlabel) + ylab(ylabel)+
+          scale_fill_grey()
+      }
+      #####Creates Boxplot###################################################################
+      else{
+        boxdata=plotdata.molten;
+        boxdata1=plotdata.molten;
+        boxdata2=plotdata.molten;
+        boxdata1$Count=plotdata.molten$Count+plotdata.molten$sd;
+        boxdata2$Count=plotdata.molten$Count-plotdata.molten$sd;
+        boxdata=rbind(boxdata,boxdata1);
+        boxdata=rbind(boxdata,boxdata2);
+        ggplot( data=boxdata, aes(x=Category,y=Count, fill=Category)) +
+                geom_boxplot() +
+                geom_dotplot(binaxis='y', stackdir='center',dotsize=0.25,binwidth=0.25)+
+                facet_wrap( "Variable",scales="free"  )+
+                ggtitle(titel) +
+                ylim(ylimit)+
+                theme(text = element_text(size=fontSize),
+                       axis.text.x = element_text(angle=ori,hjust=1))+
+                xlab(xlabel) + ylab(ylabel)+
+                scale_fill_grey()
+      }
+    }
+    
+    
+    
+    #Save the plot to a png file
+    #svname =  titel
+    ggsave(filename=paste(pth,"tmp\\",svname,".png",sep=""),dpi=resolution)
+  }
 }
+
+
+
+
 #list1 = readLightCycler480(sheet1,durations1)
 #data1 = prepdata(list1)
 #list2 = readLightCycler480(sheet2,durations2) ##add iter specific for sheet
