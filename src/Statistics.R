@@ -22,7 +22,7 @@ Datacheck<- function(fileList){
   #test=1
   for(j in 2:i-1){
     tables[[j]]<-read.table(files[[j]][1], header=TRUE, sep=";",stringsAsFactors = FALSE);
-    tables[[j]]$µExpr.<-as.numeric(gsub(",",".",tables[[j]]$µExpr.));
+    tables[[j]]$ÂµExpr.<-as.numeric(gsub(",",".",tables[[j]]$ÂµExpr.));
     tables[[j]]$sdExpr.<-as.numeric(gsub(",",".",tables[[j]]$sdExpr.));
     rownames(tables[[j]])=paste0(tables[[j]]$Versuchsgruppen,"_",tables[[j]]$Versuchsbedingung)
 	#test=test+1;
@@ -30,9 +30,9 @@ Datacheck<- function(fileList){
  #write.csv2(tables[[2]], file ="C:\\Users\\Justin\\Desktop\\test.csv",row.names=FALSE,sep=";", dec="," );
   sets=list()
   for(m in 1:length(rownames(tables[[1]]))){
-    sets[[m]]<-tables[[1]][m,]$µExpr.;
+    sets[[m]]<-tables[[1]][m,]$ÂµExpr.;
     for(k in 2:length(tables[[1]])){
-      sets[[m]][k]<-tables[[k]][m,]$µExpr.;
+      sets[[m]][k]<-tables[[k]][m,]$ÂµExpr.;
     }
   }
   #####-----------------------Create Histograms and qqPlots for all groups-------------------------------------------------#####
@@ -41,7 +41,7 @@ Datacheck<- function(fileList){
   for(groupnum in 1:length(sets)){
     ynameList[length(ynameList)+1]=rownames(tables[[1]])[groupnum];
     png(paste0(pth,"tmp\\","Histogram_",rownames(tables[[1]])[groupnum],".png"));#,width=3.25,height=3.25,units="in",res=1200
-    hist(sets[[groupnum]],col="blue",main = paste0("Histogram of µExpr for group ",rownames(tables[[1]])[groupnum]),xlab="µExpr");
+    hist(sets[[groupnum]],col="blue",main = paste0("Histogram of ÂµExpr for group ",rownames(tables[[1]])[groupnum]),xlab="ÂµExpr");
     dev.off();
  # }
 #  for(groupnum in 1:length(sets)){
